@@ -36,7 +36,11 @@
             this.timerCheckJig = new System.Windows.Forms.Timer(this.components);
             this.lblRunningState = new System.Windows.Forms.Label();
             this.groupBoxOven1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dgv = new System.Windows.Forms.DataGridView();
+            this.btnTest = new System.Windows.Forms.Button();
             this.groupBoxOven1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // Jig_1_1
@@ -99,22 +103,55 @@
             this.groupBoxOven1.Controls.Add(this.txtJig_1_1);
             this.groupBoxOven1.Location = new System.Drawing.Point(12, 12);
             this.groupBoxOven1.Name = "groupBoxOven1";
-            this.groupBoxOven1.Size = new System.Drawing.Size(679, 426);
+            this.groupBoxOven1.Size = new System.Drawing.Size(160, 170);
             this.groupBoxOven1.TabIndex = 67;
             this.groupBoxOven1.TabStop = false;
             this.groupBoxOven1.Text = "Oven1";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(697, 138);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 68;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // dgv
+            // 
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Location = new System.Drawing.Point(178, 41);
+            this.dgv.Name = "dgv";
+            this.dgv.RowTemplate.Height = 23;
+            this.dgv.Size = new System.Drawing.Size(513, 397);
+            this.dgv.TabIndex = 66;
+            // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(178, 12);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 69;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnTest);
+            this.Controls.Add(this.dgv);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBoxOven1);
             this.Controls.Add(this.lblRunningState);
             this.Name = "Main";
             this.Text = "Form1";
             this.groupBoxOven1.ResumeLayout(false);
             this.groupBoxOven1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,6 +166,9 @@
         private System.Windows.Forms.Timer timerCheckJig;
         private System.Windows.Forms.Label lblRunningState;
         private System.Windows.Forms.GroupBox groupBoxOven1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dgv;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 

@@ -10,11 +10,14 @@ using System.Windows.Forms;
 
 using System.Configuration;
 using JigTimeController.Jigs;
+using System.Data.SQLite;
+using JigTimeController.Database;
 
 namespace JigTimeController
 {
     public partial class Main : Form
     {
+        SQLiteConnection jigDB = new SQLiteConnection("Data Source=JigTimeController.db3;Version=3;");
         public Main()
         {
             InitializeComponent();
@@ -40,7 +43,7 @@ namespace JigTimeController
                 TextBox txtInput = (TextBox)sender;
                 //Jig数据
                 Label label = (Label)groupBoxOven1.Controls[txtInput.Name.Replace("txt", "")];
-
+                
                 if (label.Tag == null)
                 {
                     Jig jig = new Jig()
@@ -53,13 +56,22 @@ namespace JigTimeController
                     label.Text = string.Format("{0},{1}", jig.ID, jig.StartTime);
                     label.BackColor = Control.DefaultBackColor;
                     txtInput.Text = "";
+                    
+                    string sql = String.Format(@"INSERT INTO operate_history (jig_id,location,oven_time,creat_time,operate_type)
+VALUES('{0}', '{1}', {2}, DATETIME('now','localtime'), 'IN')", jig.ID,jig.Location,jig.OvenTime);
+                    SQLiteHelper.ExecuteNonQuery(jigDB, sql, null);
                 }
                 else
                 {
-                    if (txtInput.Text == ((Jig)label.Tag).ID)
+                    Jig jig=(Jig)label.Tag;
+                    if (txtInput.Text == (jig.ID))
                     {
-                        ((Jig)label.Tag).EndTime = DateTime.Now;
-                        //写入数据库
+                        jig.EndTime = DateTime.Now;
+
+                        string sql = String.Format(@"INSERT INTO operate_history (jig_id,location,oven_time,creat_time,operate_type)
+VALUES('{0}', '{1}', {2}, DATETIME('now','localtime'), 'OUT')", jig.ID, jig.Location, jig.OvenTime);
+                        SQLiteHelper.ExecuteNonQuery(jigDB, sql, null);
+
                         label.Tag = null;
                         label.Text = "";
                     }
@@ -87,6 +99,26 @@ namespace JigTimeController
                     }
                 }
             }
+        }
+        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TestMethods methods = new TestMethods();
+            methods.CreateNewDatabase();
+            methods.ConnectToDatabase();
+            methods.CreateTable();
+            methods.FillTable();
+            methods.PrintHighscores();
+        }
+        
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            //SQLiteHelper.ExecuteNonQuery();
+            //string sql = "select * from highscores order by score desc";
+            string sql = "select * from operate_history";
+            DataSet ds = SQLiteHelper.ExecuteDataSet(jigDB, sql, null);
+            dgv.DataSource = ds.Tables[0];
+            
         }
     }
 }
