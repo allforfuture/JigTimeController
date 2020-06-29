@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DBView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Database\DBView.Designer.cs">
+      <DependentUpon>DBView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Database\SQLiteHelper.cs" />
     <Compile Include="Jigs\Jig.cs" />
     <Compile Include="Main.cs">
@@ -66,6 +72,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Database\DBView.resx">
+      <DependentUpon>DBView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -78,6 +87,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Database\JigTimeController.db3" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

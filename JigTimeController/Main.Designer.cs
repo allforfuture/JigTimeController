@@ -29,146 +29,64 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.Jig_1_1 = new System.Windows.Forms.Label();
-            this.Jig_1_2 = new System.Windows.Forms.Label();
-            this.txtJig_1_1 = new System.Windows.Forms.TextBox();
-            this.txtJig_1_2 = new System.Windows.Forms.TextBox();
             this.timerCheckJig = new System.Windows.Forms.Timer(this.components);
-            this.lblRunningState = new System.Windows.Forms.Label();
-            this.groupBoxOven1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.dgv = new System.Windows.Forms.DataGridView();
-            this.btnTest = new System.Windows.Forms.Button();
-            this.groupBoxOven1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
+            this.Oven2 = new System.Windows.Forms.GroupBox();
+            this.Oven1 = new System.Windows.Forms.GroupBox();
+            this.panelRunningState = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // Jig_1_1
-            // 
-            this.Jig_1_1.AutoSize = true;
-            this.Jig_1_1.Location = new System.Drawing.Point(25, 29);
-            this.Jig_1_1.Name = "Jig_1_1";
-            this.Jig_1_1.Size = new System.Drawing.Size(35, 12);
-            this.Jig_1_1.TabIndex = 0;
-            this.Jig_1_1.Text = "(1,1)";
-            // 
-            // Jig_1_2
-            // 
-            this.Jig_1_2.AutoSize = true;
-            this.Jig_1_2.Location = new System.Drawing.Point(18, 100);
-            this.Jig_1_2.Name = "Jig_1_2";
-            this.Jig_1_2.Size = new System.Drawing.Size(35, 12);
-            this.Jig_1_2.TabIndex = 1;
-            this.Jig_1_2.Text = "(1,2)";
-            // 
-            // txtJig_1_1
-            // 
-            this.txtJig_1_1.Location = new System.Drawing.Point(20, 52);
-            this.txtJig_1_1.Name = "txtJig_1_1";
-            this.txtJig_1_1.Size = new System.Drawing.Size(40, 21);
-            this.txtJig_1_1.TabIndex = 64;
-            this.txtJig_1_1.Text = "159";
-            this.txtJig_1_1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Jig_KeyDown);
-            // 
-            // txtJig_1_2
-            // 
-            this.txtJig_1_2.Location = new System.Drawing.Point(20, 115);
-            this.txtJig_1_2.Name = "txtJig_1_2";
-            this.txtJig_1_2.Size = new System.Drawing.Size(40, 21);
-            this.txtJig_1_2.TabIndex = 65;
-            this.txtJig_1_2.Text = "149";
-            this.txtJig_1_2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Jig_KeyDown);
             // 
             // timerCheckJig
             // 
             this.timerCheckJig.Enabled = true;
             this.timerCheckJig.Tick += new System.EventHandler(this.timerCheckJig_Tick);
             // 
-            // lblRunningState
+            // Oven2
             // 
-            this.lblRunningState.AutoSize = true;
-            this.lblRunningState.Font = new System.Drawing.Font("宋体", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblRunningState.ForeColor = System.Drawing.Color.Green;
-            this.lblRunningState.Location = new System.Drawing.Point(697, 9);
-            this.lblRunningState.Name = "lblRunningState";
-            this.lblRunningState.Size = new System.Drawing.Size(91, 97);
-            this.lblRunningState.TabIndex = 66;
-            this.lblRunningState.Text = "R";
+            this.Oven2.Location = new System.Drawing.Point(555, 64);
+            this.Oven2.Name = "Oven2";
+            this.Oven2.Size = new System.Drawing.Size(136, 109);
+            this.Oven2.TabIndex = 70;
+            this.Oven2.TabStop = false;
+            this.Oven2.Text = "Oven2";
             // 
-            // groupBoxOven1
+            // Oven1
             // 
-            this.groupBoxOven1.Controls.Add(this.txtJig_1_2);
-            this.groupBoxOven1.Controls.Add(this.Jig_1_1);
-            this.groupBoxOven1.Controls.Add(this.Jig_1_2);
-            this.groupBoxOven1.Controls.Add(this.txtJig_1_1);
-            this.groupBoxOven1.Location = new System.Drawing.Point(12, 12);
-            this.groupBoxOven1.Name = "groupBoxOven1";
-            this.groupBoxOven1.Size = new System.Drawing.Size(160, 170);
-            this.groupBoxOven1.TabIndex = 67;
-            this.groupBoxOven1.TabStop = false;
-            this.groupBoxOven1.Text = "Oven1";
+            this.Oven1.Location = new System.Drawing.Point(29, 85);
+            this.Oven1.Name = "Oven1";
+            this.Oven1.Size = new System.Drawing.Size(419, 254);
+            this.Oven1.TabIndex = 69;
+            this.Oven1.TabStop = false;
+            this.Oven1.Text = "Oven1";
             // 
-            // button1
+            // panelRunningState
             // 
-            this.button1.Location = new System.Drawing.Point(697, 138);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 68;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // dgv
-            // 
-            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Location = new System.Drawing.Point(178, 41);
-            this.dgv.Name = "dgv";
-            this.dgv.RowTemplate.Height = 23;
-            this.dgv.Size = new System.Drawing.Size(513, 397);
-            this.dgv.TabIndex = 66;
-            // 
-            // btnTest
-            // 
-            this.btnTest.Location = new System.Drawing.Point(178, 12);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(75, 23);
-            this.btnTest.TabIndex = 69;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.panelRunningState.Location = new System.Drawing.Point(697, 12);
+            this.panelRunningState.Name = "panelRunningState";
+            this.panelRunningState.Size = new System.Drawing.Size(100, 100);
+            this.panelRunningState.TabIndex = 71;
+            this.panelRunningState.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRunningState_MouseDown);
+            this.panelRunningState.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelRunningState_MouseMove);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnTest);
-            this.Controls.Add(this.dgv);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBoxOven1);
-            this.Controls.Add(this.lblRunningState);
+            this.Controls.Add(this.panelRunningState);
+            this.Controls.Add(this.Oven2);
+            this.Controls.Add(this.Oven1);
             this.Name = "Main";
             this.Text = "Form1";
-            this.groupBoxOven1.ResumeLayout(false);
-            this.groupBoxOven1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label Jig_1_1;
-        private System.Windows.Forms.Label Jig_1_2;
-        private System.Windows.Forms.TextBox txtJig_1_1;
-        private System.Windows.Forms.TextBox txtJig_1_2;
         private System.Windows.Forms.Timer timerCheckJig;
-        private System.Windows.Forms.Label lblRunningState;
-        private System.Windows.Forms.GroupBox groupBoxOven1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dgv;
-        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.GroupBox Oven2;
+        private System.Windows.Forms.GroupBox Oven1;
+        private System.Windows.Forms.Panel panelRunningState;
     }
 }
 

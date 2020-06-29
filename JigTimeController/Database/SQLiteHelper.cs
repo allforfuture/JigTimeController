@@ -656,7 +656,7 @@ namespace JigTimeController.Database
     public class TestMethods
     {
         //数据库连接
-        private static SQLiteConnection m_dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
+        private static SQLiteConnection m_dbConnection = new SQLiteConnection("Data Source=JigTimeController.db3;Version=3;");
 
         public TestMethods()
         {
@@ -666,20 +666,27 @@ namespace JigTimeController.Database
         //创建一个空的数据库
         public void CreateNewDatabase()
         {
-            SQLiteConnection.CreateFile("MyDatabase.sqlite");
+            SQLiteConnection.CreateFile("JigTimeController.db3");
         }
 
         //创建一个连接到指定数据库
         public void ConnectToDatabase()
         {
-            //m_dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
             m_dbConnection.Open();
         }
 
         //在指定数据库中创建一个table
         public void CreateTable()
         {
-            string sql = "create table highscores (name varchar(20), score int)";
+            string sql = @"CREATE TABLE operate_history(
+	id				INTEGER		PRIMARY KEY		AUTOINCREMENT,
+	jig_id			TEXT		NOT NULL,
+	machine_id		TEXT		NOT NULL,
+	location		TEXT		NOT NULL,
+	oven_time		INTEGER		NOT NULL,
+	creat_time		DATETIME	NOT NULL,
+	operate_type	TEXT		NOT NULL
+);";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             command.ExecuteNonQuery();
         }
