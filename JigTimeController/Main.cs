@@ -48,6 +48,27 @@ namespace JigTimeController
             CreatOvenUI(Oven2, oven2Location, oven2Size, oven2Row, oven2Column);
             //panelRunningState
             panelRunningState.Location = new Point(Oven2.Location.X, Oven2.Location.Y + Oven2.Height);
+            //导入没完成的数据
+            string sql = @"WITH alldata AS(
+	SELECT*,ROW_NUMBER() OVER (PARTITION BY jig_id,machine_id,location ORDER BY creat_time DESC) IS 1 AS last_operate
+	FROM operate_history
+)
+
+SELECT jig_id,machine_id,location,oven_time,creat_time
+FROM alldata
+WHERE last_operate is TRUE
+AND operate_type='IN'";
+            DataSet ds = SQLiteHelper.ExecuteDataSet(jigDB, sql, null);
+            DataTable dt = ds.Tables[0];
+            foreach (DataRow dr in dt.Rows)
+            {
+                Jig jig = new Jig(dr);
+                GroupBox oven = (GroupBox)Controls[jig.Machine];
+                Label label = (Label)oven.Controls[jig.Location];
+                label.Tag = jig;
+                label.Text = string.Format("{0}\r\n{1}", jig.ID, jig.StartTime.ToString("yy/MM/dd\r\nHH:mm:ss"));
+                label.BackColor = jig.TimeOut ? Color.Red : Control.DefaultBackColor;
+            }
             #endregion
         }
 
@@ -80,8 +101,8 @@ namespace JigTimeController
                     Jig jig = new Jig()
                     {
                         ID = txtInput.Text,
-                        Location = new Point(Convert.ToInt16(txtInput.Name.Split('_')[1]),
-                                        Convert.ToInt16(txtInput.Name.Split('_')[2]))
+                        Machine = txtInput.Parent.Name,
+                        Location = label.Name
                     };
                     label.Tag = jig;
                     label.Text = string.Format("{0}\r\n{1}", jig.ID, jig.StartTime.ToString("yy/MM/dd\r\nHH:mm:ss"));
@@ -89,7 +110,7 @@ namespace JigTimeController
                     txtInput.Text = "";
 
                     string sql = String.Format(@"INSERT INTO operate_history (jig_id,machine_id,location,oven_time,creat_time,operate_type)
-VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'IN')", jig.ID, txtInput.Parent.Name, jig.Location, jig.OvenTime);
+VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'IN')", jig.ID, jig.Machine, jig.Location, jig.OvenTime);
                     SQLiteHelper.ExecuteNonQuery(jigDB, sql, null);
                 }
                 else
@@ -99,7 +120,7 @@ VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'IN')", jig.ID, txt
                     {
                         if (!jig.TimeOut)
                         {
-                            DialogResult dr = MessageBox.Show("该Jig未到烘烤时间，确认是否强制解锁", "Jig解锁失败", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            DialogResult dr = MessageBox.Show("该Jig未到烘烤时间，确认是否强制解锁", "Jig解锁失败", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                             if (dr != DialogResult.Yes)
                                 return;
                         }
@@ -107,11 +128,12 @@ VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'IN')", jig.ID, txt
                         jig.EndTime = DateTime.Now;
 
                         string sql = String.Format(@"INSERT INTO operate_history (jig_id,machine_id,location,oven_time,creat_time,operate_type)
-VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'OUT')", jig.ID, txtInput.Parent.Name, jig.Location, jig.OvenTime);
+VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'OUT')", jig.ID, jig.Machine, jig.Location, jig.OvenTime);
                         SQLiteHelper.ExecuteNonQuery(jigDB, sql, null);
 
                         label.Tag = null;
                         label.Text = "";
+                        txtInput.Text = "";
                     }
                     else
                     {
@@ -135,10 +157,7 @@ VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'OUT')", jig.ID, tx
                 if (con is Label && con.Tag != null)
                 {
                     Jig jig = (Jig)con.Tag;
-                    if (jig.TimeOut)
-                    {
-                        con.BackColor = Color.Red;
-                    }
+                    con.BackColor = jig.TimeOut ? Color.Red : Control.DefaultBackColor;
                 }
             }
         }

@@ -14,7 +14,7 @@ namespace JigTimeController.Database
 {
     public partial class DBView : Form
     {
-        SQLiteConnection jigDB = new SQLiteConnection("Data Source=JigTimeController.db3;Version=3;");
+        readonly SQLiteConnection jigDB = new SQLiteConnection("Data Source=JigTimeController.db3;Version=3;");
 
         public DBView()
         {

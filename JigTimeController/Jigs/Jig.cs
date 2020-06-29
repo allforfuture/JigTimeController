@@ -7,19 +7,39 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Configuration;
+using System.Data;
 
 namespace JigTimeController.Jigs
 {
     class Jig
     {
+        public Jig()
+        {
+
+        }
+
+        public Jig(DataRow dr)
+        {
+            ID = dr["jig_id"].ToString();
+            Machine= dr["machine_id"].ToString();
+            Location = dr["location"].ToString();
+            now = (DateTime)dr["creat_time"];
+            ovenTime=Convert.ToDouble(dr["oven_time"]);
+        }
+
         //ID号
         public string ID
         {
             get;set;
         }
 
+        public string Machine
+        {
+            get;set;
+        }
+
         //坐标
-        public Point Location
+        public string Location
         {
             get;
             set;
@@ -43,11 +63,12 @@ namespace JigTimeController.Jigs
         }
 
         //设定烘烤时间
+        readonly double ovenTime = Convert.ToDouble(ConfigurationManager.AppSettings["ovenTime"]);
         public double OvenTime
         {
             get
             {
-                return Convert.ToDouble(ConfigurationManager.AppSettings["ovenTime"]);
+                return ovenTime;
             }
         }
 
