@@ -30,24 +30,28 @@ namespace JigTimeController
             //测试模式
             if (ConfigurationManager.AppSettings["testMode"] == "SQLite")
                 new DBView().Show();
-            //Oven1
-            int[] oven1LocationArr = Array.ConvertAll(ConfigurationManager.AppSettings["oven1Location"].Split(','), int.Parse);
-            int[] oven1SizeArr = Array.ConvertAll(ConfigurationManager.AppSettings["oven1Size"].Split(','), int.Parse);
-            Point oven1Location = new Point(oven1LocationArr[0], oven1LocationArr[1]);
-            Size oven1Size = new Size(oven1SizeArr[0], oven1SizeArr[1]);
-            int oven1Row = Convert.ToUInt16(ConfigurationManager.AppSettings["oven1Row"]);
-            int oven1Column = Convert.ToUInt16(ConfigurationManager.AppSettings["oven1Column"]);
-            CreatOvenUI(Oven1, oven1Location, oven1Size, oven1Row, oven1Column);
-            //Oven2
-            int[] oven2LocationArr = Array.ConvertAll(ConfigurationManager.AppSettings["oven2Location"].Split(','), int.Parse);
-            int[] oven2SizeArr = Array.ConvertAll(ConfigurationManager.AppSettings["oven2Size"].Split(','), int.Parse);
-            Point oven2Location = new Point(oven2LocationArr[0], oven2LocationArr[1]);
-            Size oven2Size = new Size(oven2SizeArr[0], oven2SizeArr[1]);
-            int oven2Row = Convert.ToUInt16(ConfigurationManager.AppSettings["oven2Row"]);
-            int oven2Column = Convert.ToUInt16(ConfigurationManager.AppSettings["oven2Column"]);
-            CreatOvenUI(Oven2, oven2Location, oven2Size, oven2Row, oven2Column);
-            //panelRunningState
-            panelRunningState.Location = new Point(Oven2.Location.X, Oven2.Location.Y + Oven2.Height);
+            //gbLeft
+            gbOvenLeft.Text = gbOvenLeft.Name = ConfigurationManager.AppSettings["ovenLeftName"];
+            int[] ovenLeftLocationArr = Array.ConvertAll(ConfigurationManager.AppSettings["ovenLeftLocation"].Split(','), int.Parse);
+            int[] ovenLeftSizeArr = Array.ConvertAll(ConfigurationManager.AppSettings["ovenLeftSize"].Split(','), int.Parse);
+            Point ovenLeftLocation = new Point(ovenLeftLocationArr[0], ovenLeftLocationArr[1]);
+            Size ovenLeftSize = new Size(ovenLeftSizeArr[0], ovenLeftSizeArr[1]);
+            int ovenLeftRow = Convert.ToUInt16(ConfigurationManager.AppSettings["ovenLeftRow"]);
+            int ovenLeftColumn = Convert.ToUInt16(ConfigurationManager.AppSettings["ovenLeftColumn"]);
+            CreatOvenUI(gbOvenLeft, ovenLeftLocation, ovenLeftSize, ovenLeftRow, ovenLeftColumn);
+            //gbRight
+            gbOvenRight.Text = gbOvenRight.Name = ConfigurationManager.AppSettings["ovenRightName"];
+            int[] ovenRightLocationArr = Array.ConvertAll(ConfigurationManager.AppSettings["ovenRightLocation"].Split(','), int.Parse);
+            int[] ovenRightSizeArr = Array.ConvertAll(ConfigurationManager.AppSettings["ovenRightSize"].Split(','), int.Parse);
+            Point ovenRightLocation = new Point(ovenRightLocationArr[0], ovenRightLocationArr[1]);
+            Size ovenRightSize = new Size(ovenRightSizeArr[0], ovenRightSizeArr[1]);
+            int ovenRightRow = Convert.ToUInt16(ConfigurationManager.AppSettings["ovenRightRow"]);
+            int ovenRightColumn = Convert.ToUInt16(ConfigurationManager.AppSettings["ovenRightColumn"]);
+            CreatOvenUI(gbOvenRight, ovenRightLocation, ovenRightSize, ovenRightRow, ovenRightColumn);
+            //lblRunningState
+            lblRunningState.Text = ConfigurationManager.AppSettings["runningStateText"];
+            lblRunningState.Location = new Point(gbOvenRight.Location.X, gbOvenRight.Location.Y + gbOvenRight.Height);
+            lblRunningState.Font = new Font(lblRunningState.Font.FontFamily.Name, Convert.ToSingle(ConfigurationManager.AppSettings["runningStateFontSize"]));
             //导入没完成的数据
             string sql = @"WITH alldata AS(
 	SELECT*,ROW_NUMBER() OVER (PARTITION BY jig_id,machine_id,location ORDER BY creat_time DESC) IS 1 AS last_operate
@@ -71,13 +75,13 @@ AND operate_type='IN'";
             }
             #endregion
         }
-
-        private void panelRunningState_MouseDown(object sender, MouseEventArgs e)
+        
+        private void lblRunningState_MouseDown(object sender, MouseEventArgs e)
         {
             mouse_offset = new Point(-e.X, -e.Y);
         }
 
-        private void panelRunningState_MouseMove(object sender, MouseEventArgs e)
+        private void lblRunningState_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -145,9 +149,9 @@ VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'OUT')", jig.ID, ji
 
         private void timerCheckJig_Tick(object sender, EventArgs e)
         {
-            panelRunningState.BackColor = panelRunningState.BackColor == Color.Green ? Control.DefaultBackColor : Color.Green;
-            ShowTimeOut(Oven1);
-            ShowTimeOut(Oven2);
+            lblRunningState.Visible = !lblRunningState.Visible;
+            ShowTimeOut(gbOvenLeft);
+            ShowTimeOut(gbOvenRight);
         }
 
         void ShowTimeOut(GroupBox groupBox)
@@ -166,17 +170,15 @@ VALUES('{0}','{1}', '{2}', {3}, DATETIME('now','localtime'), 'OUT')", jig.ID, ji
         {
             groupBoxName.Location = UI_location;
             groupBoxName.Size = UI_Size;
-            int oven1Row = rowInt;
-            int oven1Column = columnInt;
-
+            
             int lblX = 15; int lblY = 15;
             int txtX = lblX; int txtY = lblY + 40;
-            int intervalX = groupBoxName.Size.Width / oven1Column;
-            int intervalY = groupBoxName.Size.Height / oven1Row;
+            int intervalX = groupBoxName.Size.Width / columnInt;
+            int intervalY = groupBoxName.Size.Height / rowInt;
 
-            for (int r = 0; r < oven1Row; r++)
+            for (int r = 0; r < rowInt; r++)
             {
-                for (int c = 0; c < oven1Column; c++)
+                for (int c = 0; c < columnInt; c++)
                 {
                     Label lbl = new Label();
                     lbl.Name = string.Format("Jig_{0}_{1}", r + 1, c + 1);

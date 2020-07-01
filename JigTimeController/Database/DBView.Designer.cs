@@ -65,6 +65,7 @@
             this.btnCreateDB.TabIndex = 72;
             this.btnCreateDB.Text = "创建新数据库";
             this.btnCreateDB.UseVisualStyleBackColor = true;
+            this.btnCreateDB.Visible = false;
             this.btnCreateDB.Click += new System.EventHandler(this.btnCreateDB_Click);
             // 
             // DBView
