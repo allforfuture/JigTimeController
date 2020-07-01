@@ -48,6 +48,11 @@ namespace JigTimeController
             int ovenRightRow = Convert.ToUInt16(ConfigurationManager.AppSettings["ovenRightRow"]);
             int ovenRightColumn = Convert.ToUInt16(ConfigurationManager.AppSettings["ovenRightColumn"]);
             CreatOvenUI(gbOvenRight, ovenRightLocation, ovenRightSize, ovenRightRow, ovenRightColumn);
+            if (gbOvenLeft.Name == gbOvenRight.Name)
+            {
+                MessageBox.Show("配置文件中的ovenLeftName与ovenRightName值不可相同", "配置错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
             //lblRunningState
             lblRunningState.Text = ConfigurationManager.AppSettings["runningStateText"];
             lblRunningState.Location = new Point(gbOvenRight.Location.X, gbOvenRight.Location.Y + gbOvenRight.Height);
